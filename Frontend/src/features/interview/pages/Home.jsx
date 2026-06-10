@@ -45,7 +45,7 @@ const Home = () => {
         } catch (err) {
             console.log("Generate Report Error:", err);
 
-            // ✅ API LIMIT HANDLING (ADDED HERE)
+            //  API LIMIT HANDLING 
             if (err?.response?.status === 429) {
                 setError("API limit reached. Try again later");
                 return;
