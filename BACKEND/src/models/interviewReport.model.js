@@ -116,7 +116,7 @@ const interviewReportSchema = new mongoose.Schema(
 
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",   // ✅ fixed consistency
+            ref: "User",   //  fixed consistency
             required: true,
             index: true
         }
