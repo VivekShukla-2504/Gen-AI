@@ -57,3 +57,21 @@ AI Core Processing: The ai.service.js connects with the Generative AI engine to 
 
 Submission & Grading: The user inputs their response via the Frontend interface. The response passes through validation middlewares, gets evaluated by the AI service, and the metrics are saved safely in the interviewReport collection inside MongoDB.
 
+---
+
+##  Project Status & Recent Updates
+
+> **Note on Feature Roadmap:** Following initial presentations and LinkedIn updates, this repository undergoes active continuous integration. Certain features may be iteratively added, modified, or deprecated to improve efficiency.
+
+###  What's New?
+* **Model Optimization:** Upgraded the underlying core AI architecture from `Gemini 1.5 Flash` to the more robust and responsive `Gemini 2.5 Flash` for faster response grading and precise feedback generation.
+* **Security Hardening:** Patched API endpoint validation layers, optimized route guarding structures, and enhanced session-token sanitization protocols.
+* **Feature Iterations:** UI state-sync mechanisms and backend logging modules have been updated based on post-launch tests.
+
+---
+
+##  Important Usage Notes
+
+* **Language Preference:** The AI Core processing engine is optimized to evaluate inputs in **English**. For accurate scoring, dynamic contextual question-responses, and technical dashboard reports, please ensure interviews are conducted in English.
+
+
