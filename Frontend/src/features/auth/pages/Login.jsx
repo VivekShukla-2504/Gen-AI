@@ -25,7 +25,7 @@ const Login = () => {
             <div className="form-container">
                 <h1>Login</h1>
 
-                {/* 🔴 ERROR UI */}
+                {/*  ERROR UI */}
                 {error && (
                     <div style={styles.errorBox}>
                         {error}
