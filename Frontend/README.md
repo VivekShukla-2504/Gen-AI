@@ -18,13 +18,13 @@ If you are developing a production application, we recommend using TypeScript wi
 
 
 main README - 
-# AI Interview Platform - Frontend 💻🎨
+# AI Interview Platform - Frontend 
 
 This is the client-side repository for the AI Interview Platform, built using **React.js (Vite)** and optimized for high-performance user interactions and dynamic AI conversational flows.
 
 ---
 
-## 🛠️ Tech Stack & Libraries Used
+##  Tech Stack & Libraries Used
 
 * **Core Framework:** React.js (Vite)
 * **Styling:** SCSS (Sass) for component-scoped structure, mixins, and variables.
@@ -34,7 +34,7 @@ This is the client-side repository for the AI Interview Platform, built using **
 
 ---
 
-## 📁 Architectural Layout (Within `src/`)
+##  Architectural Layout (Within `src/`)
 
 The frontend follows a **Feature-Based (Slice) Architecture** which makes the codebase modular, clean, and highly scalable:
 
