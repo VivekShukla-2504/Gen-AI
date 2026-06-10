@@ -60,30 +60,6 @@ Submission & Grading: The user inputs their response via the Frontend interface.
 Necessary Folder Structure 
 The repository is cleanly divided into decoupled sub-systems for modular scalability:
 
-GEN-AI/
-├── BACKEND/
-│   ├── src/
-│   │   ├── config/          # Database & core connections
-│   │   ├── controllers/     # Route handlers (auth, interview controllers)
-│   │   ├── middlewares/     # Auth guarding & file handling
-│   │   ├── models/          # Mongoose Schemas (User, Report, Blacklist)
-│   │   ├── routes/          # Express API Endpoints
-│   │   ├── services/        # AI Engine integration logic (ai.service.js)
-│   │   └── app.js           # Express App configuration
-│   ├── .env.example         # Template for server-side secrets
-│   └── server.js            # Node backend entry point
-│
-└── Frontend/
-    ├── src/
-    │   ├── features/        # Slice-based feature design
-    │   │   ├── auth/        # Components, Hooks, API, Context, Styles for Auth
-    │   │   └── interview/   # Pages (Home, Interview), Hooks, APIs for AI Engine
-    │   ├── style/           # Global styles & layout sheets (SCSS)
-    │   ├── App.jsx          # Core UI Component
-    │   ├── app.routes.jsx   # Client-side routing engine
-    │   └── main.jsx         # Client mount configuration
-    ├── index.html
-    └── vite.config.js       # Vite build configurations
 
 Installation & Setup
 Prerequisites
