@@ -220,8 +220,15 @@ async function generatePdfFromHtml(htmlContent) {
     let browser;
 
     try {
+        console.log("Chrome executable path:", puppeteer.executablePath());
+
         browser = await puppeteer.launch({
-            args: ["--no-sandbox", "--disable-setuid-sandbox"]
+            executablePath: puppeteer.executablePath(),
+            headless: true,
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox"
+            ]
         });
 
         const page = await browser.newPage();
@@ -244,7 +251,9 @@ async function generatePdfFromHtml(htmlContent) {
         return pdfBuffer;
 
     } finally {
-        if (browser) await browser.close();
+        if (browser) {
+            await browser.close();
+        }
     }
 }
 
