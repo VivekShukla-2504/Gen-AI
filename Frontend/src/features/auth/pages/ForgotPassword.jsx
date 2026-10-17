@@ -4,8 +4,10 @@ import "../auth.form.scss";
 import { useAuth } from "../hooks/useAuth";
 import AuthShowcase from "../components/AuthShowcase";
 import ThemeToggle from "../../theme/ThemeToggle";
+import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 
 const ForgotPassword = () => {
+    useDocumentTitle("Reset Password");
     const { handleForgotPassword, handleResetPassword, loading, error, setError } = useAuth();
     const navigate = useNavigate();
 

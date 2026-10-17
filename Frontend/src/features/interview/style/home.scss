@@ -1,14 +1,14 @@
 // ── Palette & Design Tokens ───────────────────────────────────────────────
-$bg-page: #090d16;
-$bg-card: #0f172a;
-$bg-card-hover: #162036;
-$bg-input: #131c31;
-$border-color: rgba(255, 255, 255, 0.08);
-$border-hover: rgba(255, 255, 255, 0.16);
+$bg-page: var(--bg, #090d16);
+$bg-card: var(--bg-card, #0f172a);
+$bg-card-hover: var(--bg-card-hover, #162036);
+$bg-input: var(--bg-input, #131c31);
+$border-color: var(--border, rgba(255, 255, 255, 0.08));
+$border-hover: var(--border-hover, rgba(255, 255, 255, 0.16));
 
-$text-primary: #f8fafc;
-$text-muted: #94a3b8;
-$text-dim: #64748b;
+$text-primary: var(--text, #f8fafc);
+$text-muted: var(--text-muted, #94a3b8);
+$text-dim: var(--text-dim, #64748b);
 
 $accent: #ec4899;
 $accent-purple: #8b5cf6;
@@ -84,7 +84,7 @@ $warning: #f59e0b;
         font-weight: 800;
         letter-spacing: -0.03em;
         line-height: 1.2;
-        color: #f8fafc;
+        color: $text-primary;
     }
 
     p {

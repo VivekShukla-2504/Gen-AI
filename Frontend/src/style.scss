@@ -21,12 +21,12 @@
 
 html[data-theme="light"] {
     --bg: #f8fafc;
-    --nav-bg: rgba(255, 255, 255, 0.9);
+    --nav-bg: rgba(255, 255, 255, 0.94);
     --bg-card: #ffffff;
     --bg-card-hover: #f1f5f9;
-    --bg-input: #ffffff;
-    --border: rgba(15, 23, 42, 0.09);
-    --border-hover: rgba(15, 23, 42, 0.18);
+    --bg-input: #f8fafc;
+    --border: rgba(15, 23, 42, 0.1);
+    --border-hover: rgba(15, 23, 42, 0.22);
     --border-focus: #ec4899;
     --text: #0f172a;
     --text-muted: #475569;
@@ -34,182 +34,615 @@ html[data-theme="light"] {
     --accent: #db2777;
     --accent-purple: #7c3aed;
     --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-    --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.06);
-    --nav-link-active: rgba(15, 23, 42, 0.06);
+    --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.06);
+    --nav-link-active: rgba(15, 23, 42, 0.08);
 
     /* Light scrollbar */
     ::-webkit-scrollbar-thumb {
-        background: rgba(15, 23, 42, 0.15);
+        background: rgba(15, 23, 42, 0.18);
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(15, 23, 42, 0.28);
+        background: rgba(15, 23, 42, 0.32);
     }
 
-    /* Home page elements in light mode */
+    /* ─── HOME PAGE (LIGHT MODE) ─── */
     .home-page {
-        .glass-card, .history-card, .jd-input-card, .resume-upload-card, .diagnostic-card {
-            background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.1) !important;
-            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06) !important;
+        .page-header {
+            h1 {
+                color: #0f172a !important;
+            }
+            p {
+                color: #475569 !important;
+            }
+            .hero-badge {
+                background: rgba(236, 72, 153, 0.1) !important;
+                border-color: rgba(236, 72, 153, 0.3) !important;
+                color: #db2777 !important;
+            }
         }
 
-        .resume-dropzone {
-            background: #f8fafc !important;
-            border-color: rgba(15, 23, 42, 0.15) !important;
+        .stats-bar {
+            .stat-card {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.1) !important;
+                box-shadow: 0 4px 18px -4px rgba(15, 23, 42, 0.06) !important;
+
+                &:hover {
+                    background: #f8fafc !important;
+                    border-color: rgba(15, 23, 42, 0.2) !important;
+                }
+
+                .stat-label {
+                    color: #64748b !important;
+                }
+                .stat-value {
+                    color: #0f172a !important;
+                }
+            }
         }
 
-        .jd-textarea, .self-desc-textarea, textarea, input {
+        .interview-card {
             background: #ffffff !important;
             border-color: rgba(15, 23, 42, 0.12) !important;
-            color: #0f172a !important;
-        }
+            box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.08) !important;
 
-        .hero-title, h1, h2, h3 {
-            color: #0f172a !important;
-        }
+            .panel--left {
+                border-right-color: rgba(15, 23, 42, 0.08) !important;
+            }
 
-        .hero-desc, p {
-            color: #475569 !important;
-        }
+            .panel-title {
+                color: #0f172a !important;
+                h2 {
+                    color: #0f172a !important;
+                }
+            }
 
-        .role-pill {
-            background: #f1f5f9 !important;
-            color: #334155 !important;
-            border-color: rgba(15, 23, 42, 0.1) !important;
-        }
+            .sample-btn {
+                background: rgba(236, 72, 153, 0.1) !important;
+                border-color: rgba(236, 72, 153, 0.28) !important;
+                color: #db2777 !important;
+                &:hover {
+                    background: rgba(236, 72, 153, 0.18) !important;
+                }
+            }
 
-        .history-item {
-            background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.08) !important;
-            &:hover {
+            .panel__textarea {
                 background: #f8fafc !important;
-                border-color: rgba(236, 72, 153, 0.3) !important;
+                border-color: rgba(15, 23, 42, 0.14) !important;
+                color: #0f172a !important;
+                &::placeholder {
+                    color: #94a3b8 !important;
+                }
+                &:focus {
+                    background: #ffffff !important;
+                    border-color: #ec4899 !important;
+                }
+            }
+
+            .char-counter {
+                color: #64748b !important;
+            }
+
+            .upload-dropzone {
+                background: #f8fafc !important;
+                border-color: rgba(15, 23, 42, 0.16) !important;
+
+                &:hover {
+                    background: rgba(236, 72, 153, 0.04) !important;
+                    border-color: rgba(236, 72, 153, 0.45) !important;
+                }
+
+                &--active {
+                    background: rgba(16, 185, 129, 0.06) !important;
+                    border-color: #10b981 !important;
+                }
+
+                .upload-icon {
+                    background: rgba(236, 72, 153, 0.1) !important;
+                    color: #db2777 !important;
+                }
+
+                .upload-main-text {
+                    color: #0f172a !important;
+                }
+
+                .upload-sub-text {
+                    color: #64748b !important;
+                }
+
+                .file-details .file-name {
+                    color: #0f172a !important;
+                }
+                .file-details .file-size {
+                    color: #64748b !important;
+                }
+                .remove-file-btn {
+                    background: rgba(15, 23, 42, 0.08) !important;
+                    color: #64748b !important;
+                    &:hover {
+                        background: rgba(239, 68, 68, 0.15) !important;
+                        color: #ef4444 !important;
+                    }
+                }
+            }
+
+            .or-divider {
+                color: #64748b !important;
+                &::before, &::after {
+                    border-bottom-color: rgba(15, 23, 42, 0.1) !important;
+                }
+            }
+
+            .interview-card__footer {
+                background: #f8fafc !important;
+                border-top-color: rgba(15, 23, 42, 0.08) !important;
+
+                .footer-info {
+                    color: #64748b !important;
+                }
+            }
+        }
+
+        .recent-reports {
+            .section-header h2 {
+                color: #0f172a !important;
+            }
+            .section-header .section-sub {
+                color: #64748b !important;
+            }
+
+            .report-card {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.1) !important;
+                box-shadow: 0 4px 18px -4px rgba(15, 23, 42, 0.05) !important;
+
+                &:hover {
+                    background: #f8fafc !important;
+                    border-color: rgba(236, 72, 153, 0.4) !important;
+                    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.09) !important;
+                }
+
+                .report-title {
+                    color: #0f172a !important;
+                }
+                .report-date {
+                    color: #64748b !important;
+                }
+                .view-link {
+                    color: #475569 !important;
+                }
+                .report-card__footer {
+                    border-top-color: rgba(15, 23, 42, 0.08) !important;
+                }
             }
         }
     }
 
-    /* Interview page elements in light mode */
+    /* ─── INTERVIEW REPORT PAGE (LIGHT MODE) ─── */
     .interview-page {
-        background: #f8fafc !important;
-
         .top-action-bar {
-            background: rgba(255, 255, 255, 0.88) !important;
-            border-color: rgba(15, 23, 42, 0.08) !important;
-            .back-btn { color: #475569 !important; &:hover { color: #0f172a !important; background: #f1f5f9 !important; } }
-            .role-badge { color: #0f172a !important; }
-            .meta-text { color: #64748b !important; }
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
+            box-shadow: 0 4px 15px -4px rgba(15, 23, 42, 0.05) !important;
+
+            .back-btn {
+                background: #f1f5f9 !important;
+                border-color: rgba(15, 23, 42, 0.12) !important;
+                color: #334155 !important;
+                &:hover {
+                    background: #e2e8f0 !important;
+                    color: #0f172a !important;
+                }
+            }
+
+            .role-badge {
+                color: #0f172a !important;
+            }
+            .meta-dot {
+                color: #94a3b8 !important;
+            }
+            .meta-text {
+                color: #64748b !important;
+            }
+        }
+
+        .interview-layout {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
+            box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.07) !important;
+        }
+
+        .interview-divider {
+            background-color: rgba(15, 23, 42, 0.08) !important;
         }
 
         .interview-nav {
-            background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.08) !important;
-            .interview-nav__label { color: #64748b !important; }
-            .nav-item {
+            background: #f8fafc !important;
+
+            .interview-nav__label {
+                color: #64748b !important;
+            }
+
+            .interview-nav__item {
                 color: #475569 !important;
-                &:hover { background: #f1f5f9 !important; color: #0f172a !important; }
+                background: transparent !important;
+
+                &:hover {
+                    background: rgba(15, 23, 42, 0.05) !important;
+                    color: #0f172a !important;
+                }
+
                 &--active {
                     background: rgba(236, 72, 153, 0.1) !important;
-                    color: #ec4899 !important;
+                    border: 1px solid rgba(236, 72, 153, 0.35) !important;
+                    color: #db2777 !important;
+                    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.1) !important;
+                }
+
+                .interview-nav__title {
+                    color: inherit !important;
+                }
+
+                .nav-counter {
+                    background: rgba(15, 23, 42, 0.08) !important;
+                    color: #475569 !important;
+                }
+
+                &--active .nav-counter {
+                    background: rgba(236, 72, 153, 0.2) !important;
+                    color: #db2777 !important;
+                }
+            }
+
+            .nav-bottom-card {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.1) !important;
+                p {
+                    color: #475569 !important;
+                }
+            }
+        }
+
+        .interview-content {
+            background: #ffffff !important;
+
+            .content-header {
+                border-bottom-color: rgba(15, 23, 42, 0.08) !important;
+
+                h2 {
+                    color: #0f172a !important;
+                }
+                .content-sub {
+                    color: #475569 !important;
+                }
+                &__count {
+                    background: rgba(236, 72, 153, 0.1) !important;
+                    border-color: rgba(236, 72, 153, 0.3) !important;
+                    color: #db2777 !important;
                 }
             }
         }
 
         .q-card {
-            background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.09) !important;
-            box-shadow: 0 4px 15px -3px rgba(15, 23, 42, 0.04) !important;
-            .q-card__question { color: #0f172a !important; }
-            .q-card__index { background: #f1f5f9 !important; color: #64748b !important; }
-            .q-card__chevron { color: #64748b !important; }
-            .q-card__body { border-top-color: rgba(15, 23, 42, 0.06) !important; }
-            .q-card__text { color: #334155 !important; }
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
+
+            &:hover {
+                border-color: rgba(15, 23, 42, 0.2) !important;
+            }
+
+            &--open {
+                background: #ffffff !important;
+                border-color: rgba(236, 72, 153, 0.4) !important;
+                box-shadow: 0 8px 24px -5px rgba(15, 23, 42, 0.06) !important;
+            }
+
+            &__index {
+                background: rgba(236, 72, 153, 0.1) !important;
+                color: #db2777 !important;
+            }
+
+            &__question {
+                color: #0f172a !important;
+            }
+
+            &__chevron {
+                color: #64748b !important;
+                &--open {
+                    color: #db2777 !important;
+                }
+            }
+
+            &__body {
+                border-top-color: rgba(15, 23, 42, 0.08) !important;
+            }
+
+            &__section {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.08) !important;
+            }
+
+            &__text {
+                color: #1e293b !important;
+            }
+
             .copy-btn {
                 background: #f1f5f9 !important;
+                border-color: rgba(15, 23, 42, 0.12) !important;
                 color: #475569 !important;
-                border-color: rgba(15, 23, 42, 0.1) !important;
-                &:hover { background: #e2e8f0 !important; color: #0f172a !important; }
+
+                &:hover {
+                    background: #e2e8f0 !important;
+                    color: #0f172a !important;
+                }
+
+                &--copied {
+                    background: rgba(16, 185, 129, 0.15) !important;
+                    border-color: rgba(16, 185, 129, 0.35) !important;
+                    color: #059669 !important;
+                }
             }
         }
 
-        .diagnostics-panel, .diagnostics-column {
-            background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.08) !important;
-            .panel-header h2 { color: #0f172a !important; }
-            .gauge-center .score-num { color: #0f172a !important; }
-            .gauge-label { color: #64748b !important; }
-            .skill-item {
+        .roadmap-day {
+            .timeline-line {
+                background: rgba(15, 23, 42, 0.12) !important;
+            }
+
+            &__card {
                 background: #f8fafc !important;
-                border-color: rgba(15, 23, 42, 0.06) !important;
-                .skill-name { color: #1e293b !important; }
+                border-color: rgba(15, 23, 42, 0.1) !important;
+            }
+
+            &__header {
+                .roadmap-day__badge {
+                    background: rgba(236, 72, 153, 0.1) !important;
+                    border-color: rgba(236, 72, 153, 0.25) !important;
+                    color: #db2777 !important;
+                }
+
+                .roadmap-day__focus {
+                    color: #0f172a !important;
+                }
+            }
+
+            &__tasks li {
+                color: #334155 !important;
+
+                .task-checkbox {
+                    background: rgba(16, 185, 129, 0.12) !important;
+                    color: #059669 !important;
+                }
             }
         }
 
-        .roadmap-card, .plan-day-card {
-            background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.08) !important;
-            h3, .day-title { color: #0f172a !important; }
-            li, .task-text { color: #334155 !important; }
+        .interview-sidebar {
+            background: #f8fafc !important;
+
+            .sidebar-divider {
+                background-color: rgba(15, 23, 42, 0.08) !important;
+            }
+
+            .match-score {
+                &__label {
+                    color: #64748b !important;
+                }
+
+                .gauge-track {
+                    stroke: rgba(15, 23, 42, 0.08) !important;
+                }
+
+                .gauge-center-text {
+                    .gauge-score {
+                        color: #0f172a !important;
+                    }
+                    .gauge-percent {
+                        color: #64748b !important;
+                    }
+                }
+
+                &__sub {
+                    color: #475569 !important;
+                }
+            }
+
+            .skill-gaps {
+                &__label {
+                    color: #64748b !important;
+                }
+
+                .skill-count {
+                    color: #64748b !important;
+                }
+
+                .skill-tag {
+                    background: #ffffff !important;
+                    border-color: rgba(15, 23, 42, 0.08) !important;
+                    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03) !important;
+
+                    .skill-name {
+                        color: #0f172a !important;
+                    }
+                }
+            }
+
+            .interview-tips-card {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.08) !important;
+
+                .tips-header {
+                    color: #0f172a !important;
+                }
+
+                p {
+                    color: #475569 !important;
+                }
+            }
         }
     }
 
-    /* Auth pages in light mode */
+    /* ─── LOADING SCREEN (LIGHT MODE) ─── */
+    .loading-screen {
+        background: #f8fafc !important;
+        h2 {
+            color: #0f172a !important;
+        }
+        p {
+            color: #475569 !important;
+        }
+    }
+
+    /* ─── AUTH PAGES (LIGHT MODE) ─── */
     .auth-page {
         background: #f1f5f9 !important;
         background-image: 
             radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
-            radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.07) 0%, transparent 45%) !important;
+            radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.07) 0%, transparent 45%),
+            radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 0.9) 0%, transparent 100%) !important;
 
         .auth-showcase {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.8)) !important;
-            border-color: rgba(15, 23, 42, 0.08) !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.85)) !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
             box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08) !important;
 
-            .logo-title { color: #0f172a !important; }
-            h1 { color: #0f172a !important; }
-            .hero-subtitle { color: #475569 !important; }
+            .logo-title {
+                color: #0f172a !important;
+            }
+
+            .showcase-hero h1 {
+                color: #0f172a !important;
+            }
+
+            .hero-subtitle {
+                color: #475569 !important;
+            }
 
             .showcase-preview-card {
                 background: #ffffff !important;
                 border-color: rgba(15, 23, 42, 0.08) !important;
                 box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06) !important;
 
-                .target-role-badge { color: #334155 !important; }
-                .metric-item .metric-text .metric-value { color: #0f172a !important; }
+                .preview-card-header {
+                    border-bottom-color: rgba(15, 23, 42, 0.06) !important;
+                    .target-role-badge {
+                        color: #334155 !important;
+                    }
+                }
+
+                .metric-item .metric-text .metric-value {
+                    color: #0f172a !important;
+                }
+
+                .preview-card-footer {
+                    border-top-color: rgba(15, 23, 42, 0.06) !important;
+                    .guarantee-text {
+                        color: #64748b !important;
+                    }
+                }
+            }
+
+            .showcase-trust-footer {
+                border-top-color: rgba(15, 23, 42, 0.08) !important;
+                .avatar-stack .avatar {
+                    border-color: #ffffff !important;
+                }
+                .trust-text .stars-row .score-label {
+                    color: #0f172a !important;
+                }
+                .trust-text .trust-sub {
+                    color: #64748b !important;
+                }
             }
         }
 
-        .form-container {
+        .auth-card-panel .form-container {
             background: #ffffff !important;
-            border-color: rgba(15, 23, 42, 0.1) !important;
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08) !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.09) !important;
 
-            .form-heading h1 { color: #0f172a !important; }
-            .form-heading p { color: #64748b !important; }
-            label { color: #334155 !important; }
-
-            input {
-                background: #f8fafc !important;
-                border-color: rgba(15, 23, 42, 0.12) !important;
+            .mobile-brand-header .logo-title {
                 color: #0f172a !important;
-                &::placeholder { color: #94a3b8 !important; }
+            }
+
+            .form-heading h1 {
+                color: #0f172a !important;
+            }
+
+            .form-heading p {
+                color: #475569 !important;
+            }
+
+            .input-group {
+                label {
+                    color: #334155 !important;
+                }
+
+                input {
+                    background: #f8fafc !important;
+                    border-color: rgba(15, 23, 42, 0.14) !important;
+                    color: #0f172a !important;
+
+                    &::placeholder {
+                        color: #94a3b8 !important;
+                    }
+
+                    &:focus {
+                        background: #ffffff !important;
+                        border-color: #ec4899 !important;
+                    }
+                }
+
+                .toggle-password-btn {
+                    color: #64748b !important;
+                    &:hover {
+                        color: #0f172a !important;
+                        background: rgba(15, 23, 42, 0.06) !important;
+                    }
+                }
             }
 
             .google-btn {
                 background: #f8fafc !important;
                 border-color: rgba(15, 23, 42, 0.14) !important;
                 color: #0f172a !important;
-                &:hover { background: #f1f5f9 !important; }
-            }
 
-            .otp-digit-input {
-                background: #f8fafc !important;
-                border-color: rgba(15, 23, 42, 0.14) !important;
-                color: #0f172a !important;
+                &:hover {
+                    background: #f1f5f9 !important;
+                    border-color: rgba(15, 23, 42, 0.25) !important;
+                }
             }
 
             .auth-divider {
-                color: #94a3b8 !important;
-                &::before, &::after { border-color: rgba(15, 23, 42, 0.08) !important; }
+                color: #64748b !important;
+                &::before, &::after {
+                    border-bottom-color: rgba(15, 23, 42, 0.1) !important;
+                }
+            }
+
+            .otp-digit-group .otp-digit-input {
+                background: #f8fafc !important;
+                border-color: rgba(15, 23, 42, 0.16) !important;
+                color: #0f172a !important;
+
+                &:focus {
+                    background: #ffffff !important;
+                    border-color: #ec4899 !important;
+                }
+
+                &.filled {
+                    background: rgba(236, 72, 153, 0.06) !important;
+                    border-color: #ec4899 !important;
+                }
+            }
+
+            .info-note {
+                background: rgba(56, 189, 248, 0.08) !important;
+                border-color: rgba(56, 189, 248, 0.2) !important;
+                color: #0369a1 !important;
+            }
+
+            .resend-box {
+                color: #64748b !important;
             }
 
             .auth-footer-text {

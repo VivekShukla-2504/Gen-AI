@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../style/interview.scss';
 import { useInterview } from '../hooks/useInterview.js';
 import { useParams, Link } from 'react-router';
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 /* ---------------- NAV ITEMS ---------------- */
 const NAV_ITEMS = [
@@ -169,6 +170,8 @@ const Interview = () => {
     } = useInterview();
 
     const { interviewId } = useParams();
+
+    useDocumentTitle(report?.title || "Interview Assessment");
 
     /* ---------------- LOADING STATE ---------------- */
     if (loading || !report) {

@@ -5,8 +5,10 @@ import { useAuth } from "../hooks/useAuth";
 import GoogleAuthButton from "../components/GoogleAuthButton";
 import AuthShowcase from "../components/AuthShowcase";
 import ThemeToggle from "../../theme/ThemeToggle";
+import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 
 const Register = () => {
+    useDocumentTitle("Create Account");
     const navigate = useNavigate();
     const { loading, handleRegister, error, setError } = useAuth();
 

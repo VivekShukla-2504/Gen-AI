@@ -31,6 +31,22 @@ const apiLimiter = rateLimit({
 });
 app.use("/api", apiLimiter);
 
+// Strict Rate Limiting on Sensitive Auth Endpoints (Brute-force protection)
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // Max 20 attempts per 15 minutes per IP
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many authentication attempts from this IP. Please try again after 15 minutes."
+    }
+});
+app.use("/api/auth/login", authLimiter);
+app.use("/api/auth/register", authLimiter);
+app.use("/api/auth/forgot-password", authLimiter);
+app.use("/api/auth/reset-password", authLimiter);
+
 /* ---------------- LOGGING ---------------- */
 app.use(morgan("dev"));
 

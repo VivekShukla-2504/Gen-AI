@@ -5,8 +5,10 @@ import { useAuth } from "../hooks/useAuth";
 import GoogleAuthButton from "../components/GoogleAuthButton";
 import AuthShowcase from "../components/AuthShowcase";
 import ThemeToggle from "../../theme/ThemeToggle";
+import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 
 const Login = () => {
+    useDocumentTitle("Sign In");
     const { loading, handleLogin, error, setError } = useAuth();
     const navigate = useNavigate();
 

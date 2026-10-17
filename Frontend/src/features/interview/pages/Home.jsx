@@ -3,6 +3,7 @@ import "../style/home.scss";
 import { useInterview } from "../hooks/useInterview.js";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { useDocumentTitle } from "../../../hooks/useDocumentTitle";
 
 const SAMPLE_JD = `Role: Senior Full-Stack Engineer (MERN / GenAI)
 Requirements:
@@ -13,6 +14,7 @@ Requirements:
 - Familiarity with CI/CD, Docker, and cloud deployments (Vercel, Render/AWS).`;
 
 const Home = () => {
+    useDocumentTitle("Dashboard");
     const { loading, generateReport, reports } = useInterview();
     const { error: authError } = useAuth();
 

@@ -31,13 +31,13 @@
     }
 
     &.secondary-button {
-        background: rgba(255, 255, 255, 0.06);
-        color: #f8fafc;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: var(--bg-card-hover, rgba(255, 255, 255, 0.06));
+        color: var(--text, #f8fafc);
+        border: 1px solid var(--border-hover, rgba(255, 255, 255, 0.12));
 
         &:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--nav-link-active, rgba(255, 255, 255, 0.1));
+            border-color: var(--border-focus, rgba(255, 255, 255, 0.2));
             transform: translateY(-1px);
         }
     }

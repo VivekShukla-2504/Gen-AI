@@ -6,6 +6,8 @@ import Protected from "./features/auth/components/Protected";
 import Home from "./features/interview/pages/Home";
 import Interview from "./features/interview/pages/Interview";
 
+import NotFound from "./features/common/NotFound";
+
 export const router = createBrowserRouter([
     {
         path: "/login",
@@ -35,23 +37,8 @@ export const router = createBrowserRouter([
             </Protected>
         )
     },
-
-    //  404 Fallback Route 
     {
         path: "*",
-        element: (
-            <div style={{
-                height: "100vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-                fontFamily: "system-ui",
-                textAlign: "center"
-            }}>
-                <h1>404</h1>
-                <p>Page Not Found</p>
-            </div>
-        )
+        element: <NotFound />
     }
 ]);
