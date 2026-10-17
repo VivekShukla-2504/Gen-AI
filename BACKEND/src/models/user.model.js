@@ -25,8 +25,47 @@ const userSchema = new mongoose.Schema(
 
         password: {
             type: String,
-            required: [true, "Password is required"],
+            required: function () {
+                return this.authProvider !== "google";
+            },
             minlength: 6
+        },
+
+        authProvider: {
+            type: String,
+            enum: ["local", "google"],
+            default: "local"
+        },
+
+        googleId: {
+            type: String,
+            sparse: true,
+            default: null
+        },
+
+        avatar: {
+            type: String,
+            default: ""
+        },
+
+        resetPasswordOtp: {
+            type: String,
+            default: null
+        },
+
+        resetPasswordOtpExpires: {
+            type: Date,
+            default: null
+        },
+
+        resetPasswordOtpAttempts: {
+            type: Number,
+            default: 0
+        },
+
+        lastOtpRequestedAt: {
+            type: Date,
+            default: null
         }
     },
     {

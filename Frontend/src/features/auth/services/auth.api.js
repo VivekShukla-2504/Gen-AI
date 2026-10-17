@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    withCredentials: true
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
+    withCredentials: true,
+    timeout: 6000 // 6-second timeout: prevents hanging if backend is sleeping or unreachable
 });
 
 /* ---------------- ERROR EXTRACTOR ---------------- */
@@ -86,6 +87,61 @@ export async function getMe() {
         return {
             success: true,
             user: res.data?.user
+        };
+
+    } catch (err) {
+        return {
+            success: false,
+            message: getErrorMessage(err)
+        };
+    }
+}
+
+/* ---------------- FORGOT PASSWORD ---------------- */
+export async function forgotPassword(data) {
+    try {
+        const res = await api.post("/api/auth/forgot-password", data);
+
+        return {
+            success: true,
+            message: res.data?.message
+        };
+
+    } catch (err) {
+        return {
+            success: false,
+            message: getErrorMessage(err)
+        };
+    }
+}
+
+/* ---------------- RESET PASSWORD ---------------- */
+export async function resetPassword(data) {
+    try {
+        const res = await api.post("/api/auth/reset-password", data);
+
+        return {
+            success: true,
+            message: res.data?.message
+        };
+
+    } catch (err) {
+        return {
+            success: false,
+            message: getErrorMessage(err)
+        };
+    }
+}
+
+/* ---------------- GOOGLE AUTH ---------------- */
+export async function googleAuth(data) {
+    try {
+        const res = await api.post("/api/auth/google", data);
+
+        return {
+            success: true,
+            user: res.data?.user,
+            message: res.data?.message
         };
 
     } catch (err) {

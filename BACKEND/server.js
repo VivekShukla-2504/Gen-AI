@@ -3,11 +3,16 @@ require("dotenv").config();
 const app = require("./src/app");
 const connectToDB = require("./src/config/database");
 
+const { validateEnvironment } = require("./src/config/env");
+
 const PORT = process.env.PORT || 3000;
 
 /* ---------------- START SERVER ONLY AFTER DB CONNECT ---------------- */
 const startServer = async () => {
     try {
+        // Validate required environment variables on boot
+        validateEnvironment();
+
         await connectToDB();
 
         app.listen(PORT, () => {

@@ -10,12 +10,12 @@ const questionSchema = new mongoose.Schema(
         },
         intention: {
             type: String,
-            required: [true, "Intention is required"],
+            default: "Evaluates core principles, problem-solving, and implementation depth.",
             trim: true
         },
         answer: {
             type: String,
-            required: [true, "Answer is required"],
+            default: "Provide a structured explanation covering trade-offs, architecture, and practical examples.",
             trim: true
         }
     },

@@ -3,7 +3,10 @@ const {
     registerUserController,
     loginUserController,
     logoutUserController,
-    getMeController
+    getMeController,
+    forgotPasswordController,
+    resetPasswordController,
+    googleAuthController
 } = require("../controllers/auth.controller");
 
 const { authUser } = require("../middlewares/auth.middleware");
@@ -15,6 +18,13 @@ authRouter.post("/register", registerUserController);
 
 /* ---------------- LOGIN ---------------- */
 authRouter.post("/login", loginUserController);
+
+/* ---------------- FORGOT & RESET PASSWORD ---------------- */
+authRouter.post("/forgot-password", forgotPasswordController);
+authRouter.post("/reset-password", resetPasswordController);
+
+/* ---------------- GOOGLE AUTH ---------------- */
+authRouter.post("/google", googleAuthController);
 
 /* ---------------- LOGOUT ---------------- */
 authRouter.post("/logout", authUser, logoutUserController);

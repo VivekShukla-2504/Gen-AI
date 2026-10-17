@@ -5,6 +5,7 @@ const {
 } = require("../services/ai.service");
 
 const interviewReportModel = require("../models/interviewReport.model");
+const userModel = require("../models/user.model");
 
 /* ---------------- INPUT VALIDATION ---------------- */
 function validateInput(selfDescription, jobDescription) {
@@ -91,6 +92,7 @@ async function generateInterViewReportController(req, res) {
         });
 
     } catch (error) {
+        console.error("REPORT GENERATION ERROR:", error);
         return res.status(500).json({
             message: "Server error",
             error: error.message
@@ -130,9 +132,15 @@ async function getInterviewReportByIdController(req, res) {
 /* ---------------- GET ALL ---------------- */
 async function getAllInterviewReportsController(req, res) {
     try {
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const page = parseInt(req.query.page, 10) || 1;
+        const skip = (page - 1) * limit;
+
         const interviewReports = await interviewReportModel
             .find({ user: req.user.id })
             .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
             .select("-resume -selfDescription -jobDescription -__v");
 
         return res.status(200).json({
@@ -166,12 +174,27 @@ async function generateResumePdfController(req, res) {
 
         const { resume, jobDescription, selfDescription } = interviewReport;
 
+        // Fetch user's real account name and email for accurate identity
+        let candidateName = req.user?.username || "Candidate";
+        let candidateEmail = "";
+        try {
+            const user = await userModel.findById(req.user.id).select("username email");
+            if (user) {
+                candidateName = user.username || candidateName;
+                candidateEmail = user.email || "";
+            }
+        } catch (e) {
+            // fallback gracefully
+        }
+
         let pdfBuffer;
         try {
             pdfBuffer = await generateResumePdf({
                 resume,
                 jobDescription,
-                selfDescription
+                selfDescription,
+                candidateName,
+                candidateEmail
             });
         } catch (err) {
             return res.status(500).json({

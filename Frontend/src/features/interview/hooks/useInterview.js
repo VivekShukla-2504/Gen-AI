@@ -5,7 +5,7 @@ import {
     generateResumePdf
 } from "../services/interview.api";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InterviewContext } from "../interview.context";
 import { useParams } from "react-router";
 
@@ -20,25 +20,31 @@ export const useInterview = () => {
     const { loading, setLoading, report, setReport, reports, setReports } =
         context;
 
+    const [error, setError] = useState(null);
+    const [pdfLoading, setPdfLoading] = useState(false);
+
     /* ---------------- GENERATE ---------------- */
     const generateReport = async (payload) => {
         setLoading(true);
+        setError(null);
 
         try {
             const res = await generateInterviewReport(payload);
 
             if (!res.success) {
-                alert(res.message); // API limit message here
-                return null;
+                const message = res.message || "Failed to generate report";
+                setError(message);
+                return { success: false, message };
             }
 
             const interview = res.data.interviewReport;
             setReport(interview);
 
-            return interview;
+            return { success: true, data: interview };
         } catch (err) {
-            console.log(err);
-            return null;
+            const message = err.message || "Something went wrong while generating report";
+            setError(message);
+            return { success: false, message };
         } finally {
             setLoading(false);
         }
@@ -47,11 +53,13 @@ export const useInterview = () => {
     /* ---------------- GET BY ID ---------------- */
     const getReportById = async (id) => {
         setLoading(true);
+        setError(null);
 
         try {
             const res = await getInterviewReportById(id);
 
             if (!res.success) {
+                setError(res.message);
                 return null;
             }
 
@@ -65,11 +73,13 @@ export const useInterview = () => {
     /* ---------------- GET ALL ---------------- */
     const getReports = async () => {
         setLoading(true);
+        setError(null);
 
         try {
             const res = await getAllInterviewReports();
 
             if (!res.success) {
+                setError(res.message);
                 return [];
             }
 
@@ -82,14 +92,15 @@ export const useInterview = () => {
 
     /* ---------------- PDF ---------------- */
     const getResumePdf = async (interviewReportId) => {
-        setLoading(true);
+        setPdfLoading(true);
+        setError(null);
 
         try {
             const res = await generateResumePdf({ interviewReportId });
 
             if (!res.success) {
-                alert(res.message);
-                return;
+                setError(res.message || "Failed to download resume PDF");
+                return { success: false, message: res.message };
             }
 
             const url = window.URL.createObjectURL(
@@ -105,8 +116,16 @@ export const useInterview = () => {
 
             document.body.appendChild(link);
             link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+
+            return { success: true };
+        } catch (err) {
+            const message = err.message || "Failed to download PDF";
+            setError(message);
+            return { success: false, message };
         } finally {
-            setLoading(false);
+            setPdfLoading(false);
         }
     };
 
@@ -121,6 +140,9 @@ export const useInterview = () => {
 
     return {
         loading,
+        pdfLoading,
+        error,
+        setError,
         report,
         reports,
         generateReport,
