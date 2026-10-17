@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router";
 import "../auth.form.scss";
 import { useAuth } from "../hooks/useAuth";
 import GoogleAuthButton from "../components/GoogleAuthButton";
+import AuthShowcase from "../components/AuthShowcase";
+import ThemeToggle from "../../theme/ThemeToggle";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -59,20 +61,27 @@ const Register = () => {
 
     return (
         <div className="auth-page">
-            <div className="brand-badge">
-                <div className="logo-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                    </svg>
-                </div>
-                <span className="logo-title">Prep<span className="gradient-text">AI</span></span>
-            </div>
+            <div className="auth-layout-wrapper">
+                <AuthShowcase />
 
-            <div className="form-container">
-                <div className="form-heading">
-                    <h1>Create Your Account</h1>
-                    <p>Start generating tailored AI interview strategies</p>
-                </div>
+                <div className="auth-card-panel">
+                    <div className="form-container">
+                        <div className="mobile-brand-header" style={{ justifyContent: "space-between", width: "100%" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                                <div className="logo-box">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                                    </svg>
+                                </div>
+                                <span className="logo-title">Prep<span className="gradient-text">AI</span></span>
+                            </div>
+                            <ThemeToggle compact={true} />
+                        </div>
+
+                        <div className="form-heading">
+                            <h1>Create Your Account</h1>
+                            <p>Start generating tailored AI interview strategies</p>
+                        </div>
 
                 {error && (
                     <div className="error-box">
@@ -224,6 +233,8 @@ const Register = () => {
                 <p className="auth-footer-text">
                     Already have an account? <Link to="/login">Sign in here</Link>
                 </p>
+                    </div>
+                </div>
             </div>
         </div>
     );

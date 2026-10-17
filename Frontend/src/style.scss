@@ -1,7 +1,8 @@
 @use "./style/button.scss";
 
-:root {
-    --bg: #090d16;
+:root, html[data-theme="dark"] {
+    --bg: #070a13;
+    --nav-bg: rgba(7, 10, 19, 0.85);
     --bg-card: #0f172a;
     --bg-card-hover: #162036;
     --bg-input: #131c31;
@@ -10,10 +11,212 @@
     --border-focus: #ec4899;
     --text: #f8fafc;
     --text-muted: #94a3b8;
+    --text-dim: #64748b;
     --accent: #ec4899;
     --accent-purple: #8b5cf6;
     --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
     --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --nav-link-active: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="light"] {
+    --bg: #f8fafc;
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --bg-input: #ffffff;
+    --border: rgba(15, 23, 42, 0.09);
+    --border-hover: rgba(15, 23, 42, 0.18);
+    --border-focus: #ec4899;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --text-dim: #64748b;
+    --accent: #db2777;
+    --accent-purple: #7c3aed;
+    --accent-gradient: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.06);
+    --nav-link-active: rgba(15, 23, 42, 0.06);
+
+    /* Light scrollbar */
+    ::-webkit-scrollbar-thumb {
+        background: rgba(15, 23, 42, 0.15);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(15, 23, 42, 0.28);
+    }
+
+    /* Home page elements in light mode */
+    .home-page {
+        .glass-card, .history-card, .jd-input-card, .resume-upload-card, .diagnostic-card {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06) !important;
+        }
+
+        .resume-dropzone {
+            background: #f8fafc !important;
+            border-color: rgba(15, 23, 42, 0.15) !important;
+        }
+
+        .jd-textarea, .self-desc-textarea, textarea, input {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
+            color: #0f172a !important;
+        }
+
+        .hero-title, h1, h2, h3 {
+            color: #0f172a !important;
+        }
+
+        .hero-desc, p {
+            color: #475569 !important;
+        }
+
+        .role-pill {
+            background: #f1f5f9 !important;
+            color: #334155 !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
+        }
+
+        .history-item {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            &:hover {
+                background: #f8fafc !important;
+                border-color: rgba(236, 72, 153, 0.3) !important;
+            }
+        }
+    }
+
+    /* Interview page elements in light mode */
+    .interview-page {
+        background: #f8fafc !important;
+
+        .top-action-bar {
+            background: rgba(255, 255, 255, 0.88) !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            .back-btn { color: #475569 !important; &:hover { color: #0f172a !important; background: #f1f5f9 !important; } }
+            .role-badge { color: #0f172a !important; }
+            .meta-text { color: #64748b !important; }
+        }
+
+        .interview-nav {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            .interview-nav__label { color: #64748b !important; }
+            .nav-item {
+                color: #475569 !important;
+                &:hover { background: #f1f5f9 !important; color: #0f172a !important; }
+                &--active {
+                    background: rgba(236, 72, 153, 0.1) !important;
+                    color: #ec4899 !important;
+                }
+            }
+        }
+
+        .q-card {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.09) !important;
+            box-shadow: 0 4px 15px -3px rgba(15, 23, 42, 0.04) !important;
+            .q-card__question { color: #0f172a !important; }
+            .q-card__index { background: #f1f5f9 !important; color: #64748b !important; }
+            .q-card__chevron { color: #64748b !important; }
+            .q-card__body { border-top-color: rgba(15, 23, 42, 0.06) !important; }
+            .q-card__text { color: #334155 !important; }
+            .copy-btn {
+                background: #f1f5f9 !important;
+                color: #475569 !important;
+                border-color: rgba(15, 23, 42, 0.1) !important;
+                &:hover { background: #e2e8f0 !important; color: #0f172a !important; }
+            }
+        }
+
+        .diagnostics-panel, .diagnostics-column {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            .panel-header h2 { color: #0f172a !important; }
+            .gauge-center .score-num { color: #0f172a !important; }
+            .gauge-label { color: #64748b !important; }
+            .skill-item {
+                background: #f8fafc !important;
+                border-color: rgba(15, 23, 42, 0.06) !important;
+                .skill-name { color: #1e293b !important; }
+            }
+        }
+
+        .roadmap-card, .plan-day-card {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            h3, .day-title { color: #0f172a !important; }
+            li, .task-text { color: #334155 !important; }
+        }
+    }
+
+    /* Auth pages in light mode */
+    .auth-page {
+        background: #f1f5f9 !important;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+            radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.07) 0%, transparent 45%) !important;
+
+        .auth-showcase {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.8)) !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08) !important;
+
+            .logo-title { color: #0f172a !important; }
+            h1 { color: #0f172a !important; }
+            .hero-subtitle { color: #475569 !important; }
+
+            .showcase-preview-card {
+                background: #ffffff !important;
+                border-color: rgba(15, 23, 42, 0.08) !important;
+                box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06) !important;
+
+                .target-role-badge { color: #334155 !important; }
+                .metric-item .metric-text .metric-value { color: #0f172a !important; }
+            }
+        }
+
+        .form-container {
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.1) !important;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08) !important;
+
+            .form-heading h1 { color: #0f172a !important; }
+            .form-heading p { color: #64748b !important; }
+            label { color: #334155 !important; }
+
+            input {
+                background: #f8fafc !important;
+                border-color: rgba(15, 23, 42, 0.12) !important;
+                color: #0f172a !important;
+                &::placeholder { color: #94a3b8 !important; }
+            }
+
+            .google-btn {
+                background: #f8fafc !important;
+                border-color: rgba(15, 23, 42, 0.14) !important;
+                color: #0f172a !important;
+                &:hover { background: #f1f5f9 !important; }
+            }
+
+            .otp-digit-input {
+                background: #f8fafc !important;
+                border-color: rgba(15, 23, 42, 0.14) !important;
+                color: #0f172a !important;
+            }
+
+            .auth-divider {
+                color: #94a3b8 !important;
+                &::before, &::after { border-color: rgba(15, 23, 42, 0.08) !important; }
+            }
+
+            .auth-footer-text {
+                color: #64748b !important;
+            }
+        }
+    }
 }
 
 * {
@@ -29,6 +232,7 @@ html, body, #root {
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Custom Sleek Scrollbar */

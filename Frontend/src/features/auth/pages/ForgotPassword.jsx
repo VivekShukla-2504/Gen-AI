@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router";
 import "../auth.form.scss";
 import { useAuth } from "../hooks/useAuth";
+import AuthShowcase from "../components/AuthShowcase";
+import ThemeToggle from "../../theme/ThemeToggle";
 
 const ForgotPassword = () => {
     const { handleForgotPassword, handleResetPassword, loading, error, setError } = useAuth();
@@ -129,16 +131,22 @@ const ForgotPassword = () => {
 
     return (
         <div className="auth-page">
-            <Link to="/login" className="brand-badge">
-                <div className="logo-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                    </svg>
-                </div>
-                <span className="logo-title">Prep<span className="gradient-text">AI</span></span>
-            </Link>
+            <div className="auth-layout-wrapper">
+                <AuthShowcase />
 
-            <div className="form-container">
+                <div className="auth-card-panel">
+                    <div className="form-container">
+                        <div className="mobile-brand-header" style={{ justifyContent: "space-between", width: "100%" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                                <div className="logo-box">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                                    </svg>
+                                </div>
+                                <span className="logo-title">Prep<span className="gradient-text">AI</span></span>
+                            </div>
+                            <ThemeToggle compact={true} />
+                        </div>
                 {step === 1 && (
                     <>
                         <div className="form-heading">
@@ -385,6 +393,8 @@ const ForgotPassword = () => {
                         </button>
                     </div>
                 )}
+                    </div>
+                </div>
             </div>
         </div>
     );

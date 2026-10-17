@@ -1,0 +1,91 @@
+.theme-toggle-segmented {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    padding: 3px;
+    gap: 2px;
+    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+
+    .theme-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.65rem;
+        border-radius: 9999px;
+        border: none;
+        background: transparent;
+        color: #94a3b8;
+        cursor: pointer;
+        font-size: 0.76rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+
+        svg {
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        &:hover {
+            color: #f8fafc;
+            background: rgba(255, 255, 255, 0.06);
+
+            svg {
+                transform: scale(1.1);
+            }
+        }
+
+        &--active {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(139, 92, 246, 0.25));
+            border: 1px solid rgba(236, 72, 153, 0.4);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+            svg {
+                color: #f472b6;
+            }
+        }
+    }
+
+    &.theme-toggle--compact {
+        padding: 2px;
+
+        .theme-toggle-btn {
+            padding: 0.35rem;
+            width: 28px;
+            height: 28px;
+            justify-content: center;
+        }
+    }
+}
+
+// Light theme overrides for ThemeToggle
+html[data-theme="light"] {
+    .theme-toggle-segmented {
+        background: rgba(241, 245, 249, 0.9);
+        border-color: rgba(15, 23, 42, 0.12);
+
+        .theme-toggle-btn {
+            color: #64748b;
+
+            &:hover {
+                color: #0f172a;
+                background: rgba(15, 23, 42, 0.05);
+            }
+
+            &--active {
+                background: #ffffff;
+                border-color: rgba(236, 72, 153, 0.4);
+                color: #0f172a;
+                box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+
+                svg {
+                    color: #ec4899;
+                }
+            }
+        }
+    }
+}
+

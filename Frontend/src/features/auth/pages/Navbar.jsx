@@ -1,5 +1,6 @@
 import { useNavigate, Link, useLocation } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import ThemeToggle from "../../theme/ThemeToggle";
 import React from "react";
 
 const Navbar = () => {
@@ -30,6 +31,8 @@ const Navbar = () => {
 
                 {/* NAVIGATION LINKS & USER PROFILE */}
                 <div style={styles.right}>
+                    <ThemeToggle />
+
                     {user ? (
                         <>
                             <Link 
@@ -88,15 +91,16 @@ const styles = {
     nav: {
         width: "100%",
         height: "64px",
-        backgroundColor: "rgba(9, 13, 22, 0.8)",
+        backgroundColor: "var(--nav-bg, rgba(9, 13, 22, 0.85))",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+        borderBottom: "1px solid var(--border)",
         position: "sticky",
         top: 0,
         zIndex: 100,
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        transition: "background-color 0.25s ease, border-color 0.25s ease"
     },
     container: {
         width: "100%",
@@ -128,7 +132,7 @@ const styles = {
         fontSize: "1.25rem",
         fontWeight: "800",
         letterSpacing: "-0.03em",
-        color: "#f8fafc"
+        color: "var(--text)"
     },
     aiBadge: {
         fontSize: "0.68rem",
@@ -150,7 +154,7 @@ const styles = {
         display: "flex",
         alignItems: "center",
         gap: "0.45rem",
-        color: "#94a3b8",
+        color: "var(--text-muted)",
         textDecoration: "none",
         fontSize: "0.88rem",
         fontWeight: "500",
@@ -159,16 +163,16 @@ const styles = {
         transition: "all 0.15s ease"
     },
     navLinkActive: {
-        color: "#f8fafc",
-        backgroundColor: "rgba(255, 255, 255, 0.06)"
+        color: "var(--text)",
+        backgroundColor: "var(--nav-link-active, rgba(255, 255, 255, 0.08))"
     },
     userProfile: {
         display: "flex",
         alignItems: "center",
         gap: "0.55rem",
         padding: "0.3rem 0.7rem",
-        background: "rgba(255, 255, 255, 0.04)",
-        border: "1px solid rgba(255, 255, 255, 0.08)",
+        background: "var(--bg-card-hover, rgba(255, 255, 255, 0.05))",
+        border: "1px solid var(--border)",
         borderRadius: "999px"
     },
     avatar: {
@@ -186,7 +190,7 @@ const styles = {
     username: {
         fontSize: "0.85rem",
         fontWeight: "600",
-        color: "#e2e8f0"
+        color: "var(--text)"
     },
     logoutBtn: {
         padding: "0.45rem 0.85rem",
