@@ -187,6 +187,29 @@ async function generateResumePdfController(req, res) {
             // fallback gracefully
         }
 
+        // Prefer actual candidate name & email extracted from resume text
+        if (resume && typeof resume === "string") {
+            const lines = resume.split("\n").map(l => l.trim()).filter(Boolean);
+            for (const line of lines.slice(0, 5)) {
+                const clean = line.replace(/[*#§Ð€ïý|•\-\d]/g, "").trim();
+                if (
+                    clean.length >= 3 &&
+                    clean.length <= 35 &&
+                    /^[a-zA-Z\s]+$/.test(clean) &&
+                    !clean.toLowerCase().includes("resume") &&
+                    !clean.toLowerCase().includes("curriculum") &&
+                    !clean.toLowerCase().includes("objective")
+                ) {
+                    candidateName = clean;
+                    break;
+                }
+            }
+            const emailMatch = resume.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+            if (emailMatch && emailMatch[0]) {
+                candidateEmail = emailMatch[0];
+            }
+        }
+
         let pdfBuffer;
         try {
             pdfBuffer = await generateResumePdf({

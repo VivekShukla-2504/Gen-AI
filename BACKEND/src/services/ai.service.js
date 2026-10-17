@@ -142,6 +142,30 @@ function buildFallbackData() {
     };
 }
 
+/* ---------------- RESILIENT DUAL-MODEL CALLER ---------------- */
+async function generateWithModelFallback({ prompt, config }) {
+    // Try primary model (gemini-2.5-flash), automatically failover to gemini-flash-latest on quota/error
+    const candidateModels = ["gemini-2.5-flash", "gemini-flash-latest"];
+    let lastError = null;
+
+    for (const model of candidateModels) {
+        try {
+            const response = await ai.models.generateContent({
+                model,
+                contents: prompt,
+                config
+            });
+            if (response?.text) {
+                return response;
+            }
+        } catch (err) {
+            console.warn(`Model ${model} issue (${err.message.slice(0, 80)}), trying fallback model...`);
+            lastError = err;
+        }
+    }
+    throw lastError || new Error("All AI models failed to generate content");
+}
+
 /* ---------------- INTERVIEW REPORT ---------------- */
 async function generateInterviewReport({
     resume,
@@ -206,9 +230,8 @@ ${selfDescription || "None provided"}
 Job Description:
 ${jobDescription}
 `;
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
+        const response = await generateWithModelFallback({
+            prompt,
             config: {
                 responseMimeType: "application/json"
             }
@@ -508,7 +531,8 @@ async function generatePdfFromHtml(htmlContent) {
         await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 });
 
         await page.setContent(finalHtml, {
-            waitUntil: "networkidle0"
+            waitUntil: "domcontentloaded",
+            timeout: 15000
         });
 
         // Measure rendered content height to ensure strict 1-page fit
@@ -685,43 +709,50 @@ You are an expert Technical Resume Writer and ATS Optimization Specialist.
 YOUR OBJECTIVE:
 Refine and transform the candidate's actual background into a high-scoring, ATS-compliant, recruiter-ready EXACTLY ONE-PAGE HTML resume strictly tailored to the Target Job Description.
 
-CRITICAL REQUIREMENT - STRICTLY ONE SINGLE A4 PAGE (NO SECOND PAGE):
-- The final ATS resume MUST fit onto EXACTLY ONE SINGLE A4 PAGE.
-- Recruiters and ATS screening engines prioritize concise, 1-page resumes. It MUST NOT spill over onto a second page under any circumstances.
-- Limit content volume:
-  * Header: Full Name, Contact info (Email, Phone, LinkedIn/GitHub, City) on 1-2 lines.
-  * Professional Summary: EXACTLY 2-3 concise, impactful sentences (max 40-50 words) positioning the candidate for the target role.
-  * Technical Skills: 3-4 categorized inline lines (e.g. Languages: ... | Frameworks & Libraries: ... | Databases: ... | Cloud & Tools: ...).
-  * Work Experience: Top 2-3 most relevant roles. For each role, provide Title, Company, Dates, and EXACTLY 2-3 bullet points max (each bullet point 1-2 lines maximum) using the Google XYZ formula: "Accomplished [X], as measured by [Y], by doing [Z]".
-  * Key Projects: Top 1-2 projects with Tech Stack and 1-2 bullet points each.
-  * Education: 1-2 compact lines (Degree, University, Graduation Year).
-- Strictly avoid excessive verbosity, long paragraphs, or filler text.
+ABSOLUTE ZERO-HALLUCINATION & FACTUAL INTEGRITY RULES (STRICTLY ENFORCED):
+1. PRESERVE CANDIDATE'S REAL IDENTITY & CONTACT DETAILS:
+   - Extract the candidate's REAL Full Name directly from the resume text (e.g. "VIVEK SHUKLA"). Do NOT use account usernames (like "VIVEK_TECH"), dummy nicknames, or placeholders ("John Doe").
+   - Extract their real location, email, phone number, and social links (GitHub, LinkedIn, Portfolio, LeetCode) from the resume. Do NOT change location to Bengaluru or any other city unless stated in the resume.
 
-STRICT IDENTITY & DATA ACCURACY RULES (DO NOT VIOLATE):
-1. PRESERVE THE CANDIDATE'S REAL IDENTITY:
-   ${hasResume
-       ? "- Extract and use the candidate's REAL name from the provided Resume text. If no explicit name is found in the text, use: \"" + (candidateName || "Candidate") + "\"."
-       : "- The candidate's name MUST be: \"" + (candidateName || "Candidate") + "\"."}
-   ${candidateEmail ? "- Use candidate email: \"" + candidateEmail + "\"." : ""}
-   - NEVER EVER use placeholder or generic dummy names like "John Doe", "Jane Doe", "Tech Innovators Inc.", or fake colleges.
-   - Keep candidate's REAL companies, universities, degrees, and project names. Do NOT replace them with generic templates!
+2. NEVER INVENT FAKE COMPANIES OR FAKE JOBS:
+   - Only include REAL companies and positions present in the candidate's resume (e.g., "MIS Assistant — People Action for National Integration (PANI)").
+   - NEVER EVER invent fictional employer names (such as "InnovateTech Solutions", "WebSphere Labs", "Tech Innovators Inc.", etc.).
+   - If the candidate is a student, fresher, or has limited employment history, DO NOT invent fake full-time developer jobs! Instead, prioritize their REAL PROJECTS prominently.
 
-2. ATS REFINEMENT & KEYWORD OPTIMIZATION:
-   - Analyze the Target Job Description for required skills, frameworks, libraries, and core responsibilities.
-   - REWRITE and REFINE the candidate's existing achievements into high-impact bullet points using strong action verbs (Architected, Engineered, Spearheaded, Implemented, Streamlined, Scaled).
-   - Naturally infuse relevant keywords from the Job Description into the skills and experience sections so that automated ATS scanners score it 90%+.
+3. NEVER INVENT FAKE UNIVERSITIES OR DEGREES:
+   - Use the candidate's REAL institutions and degrees exactly as listed (e.g., Jawaharlal Nehru University, New Delhi - MCA; M.L.K.P.G. College, Balrampur - BCA).
+   - NEVER invent or swap colleges (e.g., do NOT change JNU to SRM University, and do NOT change MCA/BCA to B.Tech).
 
-3. ATS FORMAT & STYLING (SINGLE-PAGE COMPACT CSS):
-   - Include clean CSS:
-     @page { size: A4 portrait; margin: 8mm 10mm; }
-     body { font-family: Arial, Helvetica, "Segoe UI", sans-serif; font-size: 8.8pt; line-height: 1.25; color: #0f172a; margin: 0; padding: 0; }
-     h1 { font-size: 15pt; margin: 0 0 2px 0; text-align: center; font-weight: 700; text-transform: uppercase; }
-     .contact { font-size: 8.4pt; text-align: center; margin-bottom: 5px; color: #334155; }
-     h2 { font-size: 9.6pt; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; margin: 5px 0 2px 0; padding-bottom: 1px; color: #0f172a; }
-     h3 { font-size: 8.9pt; font-weight: 600; margin: 2px 0 1px 0; }
-     ul { margin: 1px 0 2px 0; padding-left: 14px; }
-     li { margin-bottom: 1px; font-size: 8.4pt; line-height: 1.22; color: #1e293b; }
-     p { margin: 1.5px 0 2px 0; font-size: 8.6pt; }
+4. NEVER INVENT FAKE PROJECTS:
+   - Feature the candidate's REAL projects listed in their resume (e.g., "Gen-AI Interview Platform", "TransitOps — Smart Fleet & Transport Operations Platform", "Blockchain-Based Certificate Verification System").
+   - NEVER replace them with generic canned projects like "E-Commerce Platform with Stripe" or "Real-time Chat App".
+
+5. ATS REFINEMENT & KEYWORD OPTIMIZATION (WHAT YOU SHOULD ACTUALLY DO):
+   - Analyze the Target Job Description for required keywords (e.g., React.js, Node.js, Express.js, MongoDB, REST APIs, Scalability).
+   - REWRITE and ELEVATE the bullet points of their REAL projects and REAL experience using the Google XYZ formula: "Accomplished [X], as measured by [Y], by doing [Z]" with strong action verbs (Architected, Engineered, Spearheaded, Implemented, Optimized, Deployed).
+   - Show how their real MERN stack projects prove they have the exact competencies needed for the target job!
+   - Organize technical skills cleanly to highlight match with the JD. Include their real Achievements (OpenAI Codex Hackathon) and Certifications (HackerRank).
+
+6. STRICT SINGLE-PAGE A4 LAYOUT:
+   - Must fit on EXACTLY ONE SINGLE A4 PAGE.
+   - Professional Summary: 2-3 high-impact lines connecting their real MCA background & MERN stack achievements to the target role.
+   - Technical Skills: 3-4 categorized lines.
+   - Key Projects: 2-3 real projects, 2-3 impact-driven bullets each.
+   - Work Experience: Real experience only.
+   - Education: Real universities and degrees.
+   - Achievements & Certifications: Compact 1-2 lines.
+
+STYLING SPECIFICATIONS:
+- CSS:
+  @page { size: A4 portrait; margin: 8mm 10mm; }
+  body { font-family: Arial, Helvetica, "Segoe UI", sans-serif; font-size: 8.8pt; line-height: 1.25; color: #0f172a; margin: 0; padding: 0; }
+  h1 { font-size: 15pt; margin: 0 0 2px 0; text-align: center; font-weight: 700; text-transform: uppercase; }
+  .contact { font-size: 8.4pt; text-align: center; margin-bottom: 5px; color: #334155; }
+  h2 { font-size: 9.6pt; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; margin: 5px 0 2px 0; padding-bottom: 1px; color: #0f172a; }
+  h3 { font-size: 8.9pt; font-weight: 600; margin: 2px 0 1px 0; }
+  ul { margin: 1px 0 2px 0; padding-left: 14px; }
+  li { margin-bottom: 1px; font-size: 8.4pt; line-height: 1.22; color: #1e293b; }
+  p { margin: 1.5px 0 2px 0; font-size: 8.6pt; }
 
 OUTPUT FORMAT:
 Return ONLY a valid JSON object with a single property "html":
@@ -730,7 +761,7 @@ Return ONLY a valid JSON object with a single property "html":
 }
 
 CANDIDATE INFORMATION:
-Candidate Real Name: ${candidateName || "Candidate"}
+Candidate Full Name: ${candidateName || "Candidate"}
 Candidate Email: ${candidateEmail || ""}
 
 Resume Text:
@@ -745,9 +776,8 @@ ${jobDescription || "Software Engineer"}
 
         let htmlToRender = null;
         try {
-            const response = await ai.models.generateContent({
-                model: "gemini-2.5-flash",
-                contents: prompt,
+            const response = await generateWithModelFallback({
+                prompt,
                 config: {
                     responseMimeType: "application/json"
                 }
